@@ -2,7 +2,7 @@
   <div>
     <div class="md:mt-24 md:text-2xl flex justify-center">
       Unlock Accurate Property Pricing on
-      <span class="border- text-red-600">Find<span class="font-semibold">YourHouse</span>
+      <span class=" text-red-600 ">Find<span class="font-semibold">YourHouse</span>
       </span>
     </div>
 
@@ -28,25 +28,25 @@
 
     <div class="flex w-full mt-10 justify-center ">
       <!-- select City starts here -->
-      <div class="">
+      <!-- <div class="">
         <select class="select border p-2 rounded-md border-red-700 w-20">
           <option disabled selected>City</option>
           <option>Nagpur</option>
           <option>Pune</option>
           <option>Mumbai</option>
         </select>
-      </div>
+      </div> -->
       <!-- select City ends here -->
 
       <!-- select BHK options starts -->
-      <div class="">
+      <!-- <div class="">
         <select class="select border p-2 ml-1 rounded-md border-red-700 w-20">
           <option disabled selected>BHK</option>
           <option>2BHK</option>
           <option>3BHK</option>
           <option>4BHK</option>
         </select>
-      </div>
+      </div> -->
 
       <!-- select BHK options ends -->
 
@@ -54,7 +54,7 @@
         <input type="text" class="border border-red-700 p-2 h-12 ml-1 rounded-l focus:outline-none text-gray-600"
           style="width: 400px" placeholder="What are you looking for?"  v-model="areaName"/>
         
-          <button type="submit" @click="storeArea(this.areaName)"
+          <button type="submit" @click="formatAndStoreArea(this.areaName)"
             class="w-14 h-12 ml-0 bg-red-500 text-white text-xl border border-red-500 rounded-r hover:bg-red-600 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-6 ml-3 h-6">
@@ -94,8 +94,21 @@ export default {
         e.style.display = "block";
       }
     },
+
+
+    formatAndStoreArea() {
+      // Transform areaName to lowercase and store it
+      const formattedAreaName = this.areaName.replace(/\s/g, '').toLowerCase();
+      if (formattedAreaName) {
+        // Check if the formatted area name is not empty
+        this.storeArea(formattedAreaName);
+      } else {
+        // Handle the case where areaName is empty (show an error message, prevent navigation, etc.)
+        alert("Enter Area Name !!");
+      }
+    },
     storeArea(area){
-      location.href = `/resultPageFinal?area=${area}`
+      location.href = `/resultPageFinal?area=${area}`;
       console.log(this.areaName);
     }
   },

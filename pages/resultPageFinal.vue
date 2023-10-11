@@ -1,10 +1,16 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 w-full shadow-lg py-4">
-      <div class="px-5 uppercase">
-        <span class="text-red-600"
+    <div class=" w-full shadow-lg py-4">
+      <div class="px-5 flex justify-between cursor-pointer uppercase">
+        <NuxtLink to="/">
+        <span class="text-red-600 "
           >Find<span class="font-semibold">YourHouse</span>
         </span>
+      </NuxtLink>
+       <NuxtLink to="/"><button  class=" left-0 relative text-blue-600 hover:text-blue-800">Back</button></NuxtLink> 
+    
+
+
       </div>
     </div>
 
