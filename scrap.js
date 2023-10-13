@@ -10,10 +10,11 @@ async function parseNoBrokerSwargate() {
 
   // URL for Swargate in Pune
   const swargateURL =
-    "https://www.nobroker.in/property/sale/pune/Kalyani%20Nagar?searchParam=W3sibGF0IjoxOC41NDYyMzEzLCJsb24iOjczLjkwMzk1MDk5OTk5OTk5LCJwbGFjZUlkIjoiQ2hJSnhaQm5rQkRCd2pzUmNwcTFOb1V0WVZZIiwicGxhY2VOYW1lIjoiS2FseWFuaSBOYWdhciJ9XQ==&radius=2.0&city=pune&locality=Kalyani%20Nagar";
+    "https://www.nobroker.in/property/sale/pune/Karve%20Nagar?radius=2.0&city=pune&locality=Karve%20Nagar";
 
   // Visit the Swargate page and wait until network connections are completed
-  await page.goto(swargateURL, { waitUntil: "networkidle2" });
+  await page.goto(swargateURL, { waitUntil: "networkidle2" } 
+  );
 
   // Interact with the DOM to retrieve the titles
   const titles = await page.evaluate(() => {
@@ -105,7 +106,7 @@ async function parseNoBrokerSwargate() {
         averagePrice,
         minimumPrice,
         maximumPrice,
-        areaName :"kalyaninagar"
+        areaName :"yerwada"
       },
     });
 
@@ -117,6 +118,4 @@ async function parseNoBrokerSwargate() {
     await prisma.$disconnect();
   }
 }
-
-
 parseNoBrokerSwargate();
