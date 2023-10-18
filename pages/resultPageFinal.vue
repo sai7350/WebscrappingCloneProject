@@ -128,7 +128,6 @@ export default {
 };
 </script> -->
 
-
 <!-- new code here -->
 <template>
   <div class="bg-gray-100 min-h-screen">
@@ -152,47 +151,70 @@ export default {
         Price Statistics
       </h1>
       <div class="mb-4">
-  <label class="text-lg font-semibold text-gray-700">Select BHK Type:</label>
-  <div class="flex space-x-2">
-    <button
-      v-for="bhkType in bhkTypes"
-      :key="bhkType"
-      @click="selectedBhkType = bhkType"
-      :class="{
-        'bg-blue-500 text-white': selectedBhkType === bhkType,
-        'bg-gray-300 text-gray-700': selectedBhkType !== bhkType,
-      }"
-      class="py-2 px-4 rounded-md"
-    >
-      {{ bhkType }}
-    </button>
-  </div>
-</div>
+        <input value="btn" class="btn  mb-5 mr-6" type="button"/>
+        <label class="text-lg font-semibold text-gray-700"
+          >Select BHK Type:</label
+        >
+        <div class="flex space-x-2">
+          <label
+            v-for="bhkType in bhkTypes"
+            :key="bhkType"
+            class="inline-flex items-center"
+          >
+            <input
+              type="radio"
+              :value="bhkType"
+              v-model="selectedBhkType"
+              class="mr-2"
+              
+            />
+            {{ bhkType }}
+          
+          </label>
+        </div>
+      </div>
+      <h1>{{ selectedBhkType }}</h1>
+      <button @click="displayResult">
+            1BHK
+          </button>
 
       <div
-        v-for="(data, index) in propertyData"
-        :key="data.id"
+       
         class="grid grid-cols-1 md:grid-cols-3 gap-4"
       >
-        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+        <div
+          class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100"
+        >
+        
           <span class="block text-lg font-semibold text-gray-700 mb-2">
             Average Price
           </span>
-          <span class="block text-2xl font-bold text-blue-600">{{ data.averagePrice }}</span>
+          <span class="block text-2xl font-bold text-blue-600">{{
+            propertyData.averagePrice
+          }}</span>
         </div>
-        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+        <div
+          class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100"
+        >
           <span class="block text-lg font-semibold text-gray-700 mb-2">
             Maximum Price
           </span>
-          <span class="block text-2xl font-bold text-blue-600">{{ data.maximumPrice }}</span>
+          <span class="block text-2xl font-bold text-blue-600">{{
+            propertyData.maximumPrice
+          }}</span>
         </div>
-        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+        <div
+          class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100"
+        >
           <span class="block text-lg font-semibold text-gray-700 mb-2">
             Minimum Price
           </span>
-          <span class="block text-2xl font-bold text-blue-600">{{ data.minimumPrice }}</span>
+          <span class="block text-2xl font-bold text-blue-600">{{
+            propertyData.minimumPrice
+          }}</span>
         </div>
       </div>
+      <div>{{ propertyData }}</div>
     </div>
   </div>
 </template>
@@ -207,17 +229,21 @@ definePageMeta({
 export default {
   data() {
     return {
-      bhkt:"",
+      bhkt: "",
       selectAreaName: "",
       propertyData: [],
       selectedBhkType: "",
-      bhkTypes: ["1 BHK", "2 BHK", "3 BHK", "4 BHK"], // Add more BHK types as needed
+      bhkTypes: ["1BHK", "2BHK", "3BHK", "4BHK"], // Add more BHK types as needed
+      // user:{
+      //   selectedBhkType:""
+      // }
     };
   },
   mounted() {
     this.selectAreaName = this.$route.query.area;
-    
-    this.displayResult();
+  
+
+    // this.displayResult();
   },
 
   methods: {
@@ -225,15 +251,18 @@ export default {
       try {
         const body = {
           area: this.selectAreaName,
-          bhkType: this.selectedBhkType,
+          bhktype: this.selectedBhkType,
         };
-        console.log("body data here --"+body``);
 
-        const response = await axios.post("/api/bhkType", body);
+        console.log("body data here --" + JSON.stringify(body));
+
+        const response = await axios.post("/api/bhktype",{
+          body:body,
+        } );
         this.propertyData = response.data;
-        console.log("response data here ---"+response);
+        console.log("response data here ---" +JSON.stringify(this.propertyData));
       } catch (error) {
-        console.log(error);
+       
       }
     },
   },
