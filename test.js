@@ -10,7 +10,7 @@ async function parseNoBrokerSwargate() {
 
   // URL for Swargate in Pune
   const swargateURL =
-    "https://www.nobroker.in/property/sale/pune/Baner?searchParam=W3sibGF0IjoxOC41NjQyNDUyLCJsb24iOjczLjc3Njg1MTEsInBsYWNlSWQiOiJDaElKeTlOZDhNLS13anNSZmF0Xy01Y1NrYUUiLCJwbGFjZU5hbWUiOiJCYW5lciJ9XQ==&radius=2.0&city=pune&locality=Baner&type=BHK3";
+    "https://www.nobroker.in/property/sale/pune/Pimpri-Chinchwad?searchParam=W3sibGF0IjoxOC42Mjk3ODExLCJsb24iOjczLjc5OTcwOTQsInBsYWNlSWQiOiJDaElKcy1xOWZ6ZTR3anNSLUtDbnNkcGxRaXciLCJwbGFjZU5hbWUiOiJQaW1wcmktQ2hpbmNod2FkIn1d&radius=2.0&city=pune&locality=Pimpri-Chinchwad";
 
   // Visit the Swargate page and wait until network connections are completed
   await page.goto(swargateURL, { waitUntil: "networkidle2" } 
@@ -36,11 +36,7 @@ async function parseNoBrokerSwargate() {
   });
   // console.log(bhk);
   const bhkData = bhk.filter(item => item.includes('1 BHK') || item.includes('2 BHK') || item.includes('3 BHK'));
-
-  const uniqueBHK = [...new Set(bhkData)].join(' ').replace(/ /g, '');
-
-  console.log(uniqueBHK);
-  // console.log(bhkData);
+// console.log(bhkData);
 
 
 
@@ -60,7 +56,7 @@ async function parseNoBrokerSwargate() {
     }
   });
 
-  // console.log(extractedPrices);
+  console.log(extractedPrices);
  
 
 
@@ -110,14 +106,12 @@ console.log(numericPrices);
  // mering two arrays into objects
  const totaldata = {};
 
- if (titles.length === bhkData.length && titles.length === numericPrices.length) {
+ if (titles.length === bhkData.length) {
    for (let i = 0; i < titles.length; i++) {
      totaldata[numericPrices[i]] = bhkData[i];
    }
  }
- 
  console.log(totaldata);
- 
 
 
 
@@ -148,7 +142,6 @@ console.log(numericPrices);
         minimumPrice,
         maximumPrice,
         areaName :"test",
-        bhktype:uniqueBHK
        
       },
     });
@@ -160,5 +153,6 @@ console.log(numericPrices);
     // Close the Prisma client
     await prisma.$disconnect();
   }
+
 }
 parseNoBrokerSwargate();

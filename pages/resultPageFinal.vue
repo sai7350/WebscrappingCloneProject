@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div class="w-full shadow-lg py-4">
       <div class="px-5 flex justify-between cursor-pointer uppercase">
@@ -126,4 +126,117 @@ export default {
     },
   },
 };
+</script> -->
+
+
+<!-- new code here -->
+<template>
+  <div class="bg-gray-100 min-h-screen">
+    <div class="w-full shadow-lg py-4">
+      <div class="px-5 flex justify-between cursor-pointer uppercase">
+        <NuxtLink to="/">
+          <span class="text-red-600"
+            >Find<span class="font-semibold">YourHouse</span>
+          </span>
+        </NuxtLink>
+        <NuxtLink to="/"
+          ><button class="left-0 relative text-blue-600 hover:text-blue-800">
+            Back
+          </button></NuxtLink
+        >
+      </div>
+    </div>
+
+    <div class="container mx-auto mt-8 p-8 bg-white shadow-lg rounded-lg">
+      <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">
+        Price Statistics
+      </h1>
+      <div class="mb-4">
+  <label class="text-lg font-semibold text-gray-700">Select BHK Type:</label>
+  <div class="flex space-x-2">
+    <button
+      v-for="bhkType in bhkTypes"
+      :key="bhkType"
+      @click="selectedBhkType = bhkType"
+      :class="{
+        'bg-blue-500 text-white': selectedBhkType === bhkType,
+        'bg-gray-300 text-gray-700': selectedBhkType !== bhkType,
+      }"
+      class="py-2 px-4 rounded-md"
+    >
+      {{ bhkType }}
+    </button>
+  </div>
+</div>
+
+      <div
+        v-for="(data, index) in propertyData"
+        :key="data.id"
+        class="grid grid-cols-1 md:grid-cols-3 gap-4"
+      >
+        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+          <span class="block text-lg font-semibold text-gray-700 mb-2">
+            Average Price
+          </span>
+          <span class="block text-2xl font-bold text-blue-600">{{ data.averagePrice }}</span>
+        </div>
+        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+          <span class="block text-lg font-semibold text-gray-700 mb-2">
+            Maximum Price
+          </span>
+          <span class="block text-2xl font-bold text-blue-600">{{ data.maximumPrice }}</span>
+        </div>
+        <div class="rounded-lg shadow-md p-6 hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out bg-blue-100">
+          <span class="block text-lg font-semibold text-gray-700 mb-2">
+            Minimum Price
+          </span>
+          <span class="block text-2xl font-bold text-blue-600">{{ data.minimumPrice }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+definePageMeta({
+  layout: false,
+});
+
+export default {
+  data() {
+    return {
+      bhkt:"",
+      selectAreaName: "",
+      propertyData: [],
+      selectedBhkType: "",
+      bhkTypes: ["1 BHK", "2 BHK", "3 BHK", "4 BHK"], // Add more BHK types as needed
+    };
+  },
+  mounted() {
+    this.selectAreaName = this.$route.query.area;
+    
+    this.displayResult();
+  },
+
+  methods: {
+    async displayResult() {
+      try {
+        const body = {
+          area: this.selectAreaName,
+          bhkType: this.selectedBhkType,
+        };
+        console.log("body data here --"+body``);
+
+        const response = await axios.post("/api/bhkType", body);
+        this.propertyData = response.data;
+        console.log("response data here ---"+response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
+
